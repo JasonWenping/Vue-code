@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<meta charset="UTF-8">
+<head>
+<title>vue综合案例</title>
+<style>
+    fieldset{
+        width: 600px;
+        margin: 20px auto;
+        line-height: 30px;
+        border:2px solid tomato;
+    }
+    table{
+        width: 630px;
+        margin: 20px auto;
+        line-height: 35px;
+        border: 1px gray solid;
+        text-align: center;
+    }
+    thead,button{
+        background: red;
+        color: #ffffff;
+        font-weight: bold;
+    }
+    button{
+        height: 30px;
+        width: 70px;
+        border: none;
+    }
+</style>
+</head>
+<body>
+  <div id="app">
+      <fieldset>
+              <legend>学生录用系统</legend>
+                <label for="name">姓名：</label><input type="text" name="name" v-model="newperson.name">
+                <br>
+                <label for="age">年龄：</label><input type="text" name="age" v-model="newperson.age">
+                <br>
+                <label for="sex">性别：</label><select name="sex" id="sex" v-model="newperson.sex"><option value="男">男</option><option value="女">女</option></select>
+                <br>
+                <label for="phone">手机：</label><input type="text" name="phone" v-model="newperson.phone">
+                <br>
+                <button @click='addPerson'>添加</button>
+          </fieldset>
+
+      <div>
+          <table>
+              <thead>
+                  <tr>
+                      <td>姓名</td>
+                      <td>年龄</td>
+                      <td>性别</td>
+                      <td>手机</td>
+                      <td>删除</td>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr v-for="(p,index) in person">
+                      <td>{{p.name}}</td>
+                      <td>{{p.age}}</td>
+                      <td>{{p.sex}}</td>
+                      <td>{{p.phone}}</td>
+                      <td><button @click="deletePerson(index)">删除</button></td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+
+  
+<script src="../vue.min.js"></script>
+<script>
+  new Vue({
+    el:'#app',
+    data:{
+        person:[
+            {name:'jason',age:27,sex:'男',phone:'13509876789'},
+            {name:'Leo',age:30,sex:'女',phone:'13709876789'},
+            {name:'Rolaado',age:33,sex:'男',phone:'15009876789'},
+            {name:'Lincon',age:67,sex:'男',phone:'15509876789'}
+        ],
+        //预存新的person对象
+        newperson:{
+            name:'',
+            age:0,
+            sex:'',
+            phone:''
+        }
+    },
+    methods:{
+        addPerson(){
+            if(this.newperson.name == ''){
+                alert('please input your name!');
+                return;
+            }
+            if(this.newperson.phone == '')
+            {
+                alert('please input your phone!');
+                return;
+            }
+            if(this.newperson.sex == '')
+            {
+                alert('please input your sex!');
+                return;
+            }
+            //向数组中添加新的学员对象
+            this.person.unshift(this.newperson);
+            
+            //提交之后表单清零
+            this.newperson = {
+            name:'',
+            age:0,
+            sex:'',
+            phone:''
+            }
+            
+        },
+
+        deletePerson(index){
+            this.person.splice(index,1);
+        }
+    }
+  });
+</script>
+</body>
+</html>

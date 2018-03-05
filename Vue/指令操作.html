@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<meta charset="UTF-8">
+<head>
+<title>templeteStr</title>
+<style>
+  table{
+    border-spacing: 0;
+  }
+  table tr{
+    line-height: 40px;
+    text-align: center;
+  }
+  table tr td{
+    border: 1px solid #333;
+    width: 170px;
+    height: 30px;
+    margin: 0;
+    padding: 0px;
+  }
+  thead{
+    background: burlywood;
+  }
+  .hover{
+    background: red;
+    color: white;
+  }
+</style>
+</head>
+<body id='app'>
+  <div id="app1">
+      <!--     v-once  -->
+      <h1 v-once>{{ msg }}</h1>
+      <h1>{{ msg }}</h1> 
+      
+      <!--   v-on -->
+      <button @click="changeContent">cilck</button>
+
+      <!--     v-if -->
+      <p v-if="show">显示</p>
+      <p v-else='hide'>显示2</p>
+      <p v-if="hide">隐藏</p>
+      <p v-show="show">显示</p>
+      <p v-show="hide">隐藏</p>
+
+      <!--   v-if v-else-if v-else  -->
+      <p v-if='data >= 90'>优秀</p>
+      <p v-else-if='data >=70'>良好</p>
+      <p v-else-if="data >=60">及格</p>
+      <p v-else>不及格</p>
+      <input type="text" v-model="data" /> 
+
+      <!--  v-for -->
+      <p v-for='s in prize'>
+        {{ s }}
+      </p>
+
+      <!--     v-for 综合实力    -->
+      <table>
+        <thead>
+          <tr><td v-for="t in title">{{ t }}</td></tr>
+        </thead>
+        <tbody>
+          <tr v-for="s in student">
+            <td v-for="m in s">{{ m }}</td>
+          </tr>
+        </tbody>           
+      </table>
+
+    <!--   v-bind  -->
+    <p v-for='(m,index) in college' v-bind:class="index === activeIndex ? classname:''">
+      {{ m }}
+    </p>
+  </div>
+
+  
+<script src="../vue.min.js"></script>
+<script>
+  new Vue({
+    el:'#app1',
+    data:{
+      msg:'hello world',
+      getConsole:function(){
+        console.log('this is clicked')
+      },
+      //show:true,
+      //hide:false
+      data:'90',
+      prize:[21,33.2,44.5,21.9],
+      title:{name:'Name',age:"Age",sex:"Sex"},
+      student:[
+        { name:'Jason', age:21, sex:'man'},
+        { name:'Lily', age:19, sex:'woman'},
+        { name:'Tom', age:23, sex:'man'},
+        { name:'Lilei', age:35, sex:'man'},
+        { name:'Ms zhang', age:31, sex:'woman'},
+        { name:'Heryk', age:25, sex:'man'},
+        { name:'Leo', age:26, sex:'man'}
+      ],
+      college:[
+        'IOS学院',
+        'Linux学院',
+        '前端学院',
+        'UI学院',
+        'AR学院',
+        'Java学院'
+      ],
+      classname:'hover',
+      activeIndex:2,
+      addClass:function(){
+        this.addClass('hover');
+      },
+    },
+    methods:{
+      changeContent(){
+        this.msg = 'change content'
+      }
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组建应用</title>
+</head>
+<body>
+    <script src="../vue.min.js"></script>
+    <div id="app">
+        <p>{{ msg }}</p>
+        <my-compnent></my-compnent>
+        <component2></component2>
+    </div>
+    <div id="app1">
+        <my-compnent></my-compnent>
+        <!-- 局部组建只能在注册的元素里可用 -->
+        <component2></component2>
+    </div>
+    <script>
+        Vue.component("my-compnent",{
+            template: '<h1>这是一个组建</h1>'
+        });
+
+        new Vue({
+            el:"#app",
+            data:{
+                msg:'hello'
+            },
+            components:{
+                //组建名：组建构造器
+                'component2':{
+                    template:'<h1>这是一个局部组建</h1>'
+                }
+            }
+        });
+        new Vue({
+            el:'#app1'
+        })
+    </script>
+</body>
+</html>

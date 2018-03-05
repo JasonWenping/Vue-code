@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{ msg }}</p>
+        <p>{{ reserve }}</p>
+        <my-Data></my-Data>
+    </div>
+
+    <script src="../vue.min.js"></script>
+    <script>
+        //创建组建构造器
+        var Profile = Vue.extend({
+            //模板选项
+            template:'<h1>component1</h1>'
+        });
+        //注册组建，指定组建的名称。
+        Vue.component('my-Data',Profile);
+    new Vue({
+        el:'#app',
+        data:{
+            msg:'Hello world'
+        },
+        methods:{
+
+        },
+        //添加了计算属性
+        computed:{
+            //为属性添加get方法
+            reserve:function(){
+                return this.msg.split('').reverse().join('');
+            } 
+            //set方法如何调用？  
+        }
+    })
+    </script>
+</body>
+</html>
