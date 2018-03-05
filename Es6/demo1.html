@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<meta charset="UTF-8">
+<head>
+<title>let-const</title>
+<style>
+    canvas{
+        margin: 10px auto;
+    }
+</style>
+</head>
+<body>
+    <script src="../underscore.js"></script>
+
+    <canvas id="canvas">当前浏览器不支持</canvas>
+
+<script>
+    const convas = document.getElementById('canvas');
+    const ctx = convas.getContext('2d');
+    convas.width = 1000;
+    convas.height = 600;
+    convas.style.background = "#000";
+
+    /*
+    新建气泡对象
+    */
+    class Balls{
+        constructor(x,y,color){
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            this.r = 40;
+        }
+
+        render(){
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.restore();
+        }
+    }
+
+    class MoveBall extends Balls{
+        constructor(x,y,color){
+            super(x,y,color);
+            this.dX = _.random(-5,5);
+            this.dY = _.random(-5,5);
+            this.dR = _.random(1,3);
+        }
+        ballmove(){
+            this.x+=this.dX;
+            this.y+=this.dY;
+            this.r-=this.dR;
+            if(this.r<0)
+            {
+                this.r = 0;
+            }
+        }
+    }
+    //实例化小球
+    //let ball = new Balls(50,50,"red");
+    //ball.render();
+    let ballArr = [];
+    let colorArr = ['red','white','green','blue','grey','orange','pink'];
+
+    //监听鼠标的移动
+    convas.addEventListener('mousemove',function(e){
+        //  let e = e || event;
+        let ball = new MoveBall(e.offsetX,e.offsetY,colorArr[_.random(0,colorArr.length)]);
+        ballArr.push(ball);
+        //console.log(ballArr);
+    })
+
+    //开启定时器
+    setInterval(function(){
+        ctx.clearRect(0,0,convas.width,convas.height)
+        for(let i=0;i<ballArr.length;i++){
+            ballArr[i].render();
+            ballArr[i].ballmove();
+        }
+    },50)
+</script>
+</body>
+</html>
