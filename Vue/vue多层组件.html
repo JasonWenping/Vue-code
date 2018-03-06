@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue多层组件</title>
+</head>
+<body>
+    <div id="app">
+        <my-parents :title=title :src=src></my-parents>
+    </div>
+
+    <template id="title">
+        <h1>{{ title }}</h1>
+    </template>
+
+    <template id="img">
+        <img :src=img width="200px" >
+    </template>
+    <template id="parents">
+        <div>
+            <child1 :title=title></child1>
+            <child2 :img=src></child2>
+        </div>
+    </template>
+    
+
+    <script src="../vue.min.js"></script>
+    <script>
+
+        let Child1 = Vue.extend({
+            template:'#title',
+            props:["title"]
+        });
+        let Child2 = Vue.extend({
+            template:'#img',
+            props:["img"]
+        });
+        Vue.component('my-parents',{
+            template:'#parents',
+            components:{
+                'child1':Child1,
+                'child2':Child2
+            },
+            props:['title','src']
+        })
+        
+        new Vue({
+            el:'#app',
+            data:{
+                title:'hello world',
+                src:'../src/1244222446.jpg'
+            }
+        })
+    </script>
+</body>
+</html>

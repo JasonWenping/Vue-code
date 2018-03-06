@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件应用</title>
+</head>
+<body>
+    <script src="../vue.min.js"></script>
+    <div id="app">
+        <p>{{ msg }}</p>
+        <my-compnent></my-compnent>
+        <component2></component2>
+        <parents></parents>
+        <my-div></my-div>
+    </div>
+    <div id="app1">
+        <my-compnent></my-compnent>
+        <!-- 局部组建只能在注册的元素里可用 -->
+        <component2></component2>
+    </div>
+
+    <template id='my_div'>
+        <div>
+            <input type="text" value="nothing">
+            <label for="text">输入</label>
+        </div>
+    </template>
+
+
+    <script>
+        Vue.component('my-div',{
+            template:'#my_div'
+        })
+
+        Vue.component("my-compnent",{
+            template: '<h1>这是一个组建</h1>'
+        });
+
+        let Child1 = Vue.extend({
+            template:'<p>child1</p>'
+        });
+        let Child2 = Vue.extend({
+            template:'<h2>child2</h2>'
+        });
+       
+        //Vue.component('my-child',Child1)
+
+        //父组件的构造（子组件在父组件构造器里完成注册）
+        let parent = Vue.extend({
+            template:`
+            <div>
+              <child1></child1>
+              <child2></child2>
+            </div>`,
+            //注册(实例化）子组件。。。
+            components:{
+                'child1':Child1,
+                'child2':Child2
+            }
+        })
+        //实例化父组件。
+        Vue.component('parents',parent)
+
+        new Vue({
+            el:"#app",
+            data:{
+                msg:'hello'
+            },
+            components:{
+                //组建名：组建构造器
+                'component2':{
+                    template:'<h1>这是一个局部组建</h1>'
+                }                
+            }
+        });
+        new Vue({
+            el:'#app1'
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <my-slot>
+            <div>this new content</div>
+        </my-slot>
+        <my-computer>
+            <div slot="cpu">这是CPU 的位置</div>
+        </my-computer>
+    </div>
+
+    <template id="my_slot">
+        <div id="slot">
+            <h1 class="slot-header">插槽的头部</h1>
+            <slot>插槽的内容部分</slot>
+            <footer>插槽的尾部</footer>
+        </div>
+    </template>
+
+    <template id="my_computer">
+        <div id="computer">
+            <!--实名插槽-->
+            <slot name='cpu'>cpu占位</slot>
+        </div>
+    </template>
+
+    <script src="../vue.min.js"></script>
+    <script>
+        Vue.component('my-slot',{
+            template:'#my_slot'
+        })
+
+        //实名插槽的实例化。
+        Vue.component('my-computer',{
+            template:'#my_computer'
+        })
+
+        new Vue({
+            el:'#app'
+        })
+    </script>
+    
+</body>
+</html>

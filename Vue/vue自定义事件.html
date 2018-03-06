@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <my-btn @total = "countAll"></my-btn>
+        <my-btn @total = "countAll"></my-btn>
+        <my-btn @total = "countAll"></my-btn>
+        <my-btn @total = "countAll"></my-btn>
+        <my-btn @total = "countAll"></my-btn>
+
+        <p>总共点击了{{ counters }}次</p>
+    </div>
+
+    <template id='btn'>
+        <button @click='total()'>点击了{{ counter }}次</button>
+    </template>
+
+    <script src="../vue.min.js"></script>
+    <script>
+
+        Vue.component('my-btn',{
+            template:'#btn',
+            data:function(){
+                return{
+                    counter:0,
+                }
+            },
+            methods:{
+                total(){
+                    this.counter +=1;
+                    //通知外部组件对应事件的触发
+                    this.$emit("total")
+                }
+            }
+        })
+        new Vue({
+         el:'#app',
+         data:{
+            counters:0
+         },
+         methods:{
+             countAll(){
+                 this.counters += 1;
+             }
+         }
+         
+     })   
+    </script>
+    
+</body>
+</html>
