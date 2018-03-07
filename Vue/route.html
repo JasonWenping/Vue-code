@@ -2,12 +2,99 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css" >
+    <style>
+        body{
+            background-color: #e8e8e8;
+        }
+    </style>
 </head>
 <body>
-    <script src="../vue-router.js"></script>">
-    <script src="../vue.min.js"></script>
+        <script src="../vue.min.js"></script>
+        <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    
+    <div id="app">
+            <div class="row">
+                <div class="col-xs-8 col-xs-offset-2">
+                    <div class="page-header">
+                        <h1>Jason's Code 学院</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 col-xs-offset-2">
+                    <div class="list-group">
+                        <!-- 使用 router-link 组件来导航. -->
+                        <!-- 通过传入 `to` 属性指定链接. -->
+                        <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+                        <router-link class="list-group-item" to="/h5">H5</router-link>
+                        <router-link class="list-group-item" to="/java">Java</router-link>
+                        <router-link class="list-group-item" to="/python">Python</router-link>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="panel">
+                        <div class="panel-body">
+                                <router-view></router-view>
+                        </div>
+                    </div>
+                </div>  
+            </div>            
+    </div>
+
+    <template id="h5">
+        <div>
+            <h1>H5学院</h1>
+            <p>Html5 是一个很牛逼的技能！</p>
+            <img src="../src/h5.png">
+        </div>
+    </template>
+
+    <template id="java">
+        <div>
+            <h1>Java学院</h1>
+            <p>Java是世界上最好的编程语言！</p>
+            <img src="../src/java.png">
+        </div>
+    </template>
+    <template id="python">
+        <div>
+            <h1>Pyphon学院</h1>
+            <p>它最近非常火。。。</p>
+            <img src="../src/python.png">
+        </div>
+    </template>
+
+
+    <script>
+        const Html5 = Vue.extend({
+            template:'#h5'
+        });
+        
+        const Java = Vue.extend({
+            template:'#java'
+        });
+        const Python = Vue.extend({
+            template:'#python'
+        });
+
+        const routes = [
+            { path:'/h5',component: Html5},
+            { path:'/java',component: Java},
+            { path:'/python',component: Python},
+            { path:'/',redirect:'/h5'}
+        ];
+
+        const router = new VueRouter({
+            routes //Es6语法，简写，等同于routes:toutes
+        })
+
+        new Vue({
+            router
+        }).$mount('#app')       
+   
+    </script>
     
 </body>
 </html>
